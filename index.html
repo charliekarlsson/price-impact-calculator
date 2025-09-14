@@ -13,7 +13,7 @@
     
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
       min-height: 100vh;
       padding: 20px;
     }
@@ -26,13 +26,75 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       backdrop-filter: blur(10px);
+      border: 2px solid #2a5298;
     }
     
     .header {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
       padding: 30px;
       text-align: center;
       color: white;
+      position: relative;
+      border-radius: 20px 20px 0 0;
+      background-clip: padding-box;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+    
+    .tool-logo {
+      height: 120px;
+      width: auto;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      margin-bottom: 10px;
+    }
+    
+    .tool-logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .header-text {
+      text-align: center;
+    }
+    
+    .header-text h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      font-weight: bold;
+    }
+    
+    .header-text p {
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+      font-size: 1.1em;
+      opacity: 1;
+    }
+    
+    .brand-logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 120px;
+      height: auto;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+    
+    .brand-logo:hover {
+      opacity: 1;
     }
     
     .header h1 {
@@ -43,7 +105,9 @@
     
     .header p {
       font-size: 1.1em;
-      opacity: 0.9;
+      opacity: 1;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
     
     .content {
@@ -189,15 +253,15 @@
     }
     
     .dump-thresholds {
-      background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+      background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
       padding: 20px;
       border-radius: 12px;
-      border-left: 5px solid #ff4757;
+      border-left: 5px solid #e17055;
       margin-top: 20px;
     }
     
     .dump-thresholds b {
-      color: #c0392b;
+      color: #d63031;
     }
     
     .simulate-btn-container {
@@ -207,6 +271,34 @@
     
     .icon {
       color: #667eea;
+    }
+    
+    .footer {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+    }
+    
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .footer-logo {
+      width: 40px;
+      height: auto;
+      opacity: 0.8;
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.6;
     }
     
     @media (max-width: 768px) {
@@ -231,6 +323,38 @@
       #contractAddress {
         width: 100%;
       }
+      
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .header-text {
+        min-width: auto;
+      }
+      
+      .tool-logo {
+        height: 100px;
+        width: auto;
+        margin-bottom: 5px;
+      }
+      
+      .brand-logo {
+        position: static;
+        width: 80px;
+        margin-bottom: 15px;
+        order: -1;
+      }
+      
+      .header > div:first-child {
+        position: static !important;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+      
+      .header {
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -238,12 +362,33 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1><i class="fas fa-chart-line"></i> Memecoin Price Impact Calculator</h1>
-      <p>Analyze the market impact of your token sales with precision</p>
-      <div id="tokenDisplay" style="margin-top: 15px; padding: 12px 20px; background: rgba(255,255,255,0.2); 
-                                    border-radius: 25px; font-size: 1.2em; font-weight: bold; 
-                                    backdrop-filter: blur(10px); display: none;">
-        <i class="fas fa-coins"></i> <span id="tokenInfo">No token loaded</span>
+      <!-- Brand Logo with X link -->
+      <div style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 15px; z-index: 10;">
+        <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/evodevpurple.png?raw=true" 
+             alt="EvoDev" style="width: 120px; height: auto; opacity: 0.9;">
+        <a href="https://x.com/EvoDeveloper" target="_blank" 
+           style="text-decoration: none; transition: all 0.3s ease; display: flex; align-items: center;" 
+           onmouseover="this.style.transform='scale(1.2)'" 
+           onmouseout="this.style.transform='scale(1)'">
+          <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/xlogo.webp?raw=true" 
+               alt="X/Twitter" style="width: 35px; height: 35px;">
+        </a>
+      </div>
+      
+      <div class="header-content">
+        <!-- Tool Logo (replaces title) -->
+        <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/P-I-Cupscaled.png?raw=true" 
+             alt="Price Impact Calculator" class="tool-logo">
+        
+        <div class="header-text">
+          <p>Analyze the market impact of your token sales with precision</p>
+          <div id="tokenDisplay" style="margin-top: 15px; padding: 12px 20px; background: rgba(255,255,255,0.25); 
+                                        border-radius: 25px; font-size: 1.2em; font-weight: bold; 
+                                        backdrop-filter: blur(10px); display: none; color: #ffffff;
+                                        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.3);">
+            <i class="fas fa-coins"></i> <span id="tokenInfo">No token loaded</span>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -257,13 +402,16 @@
         <div class="input-group">
           <div class="input-row">
             <label><i class="fas fa-link"></i> Contract Address:</label>
-            <input id="contractAddress" type="text" placeholder="Enter Solana token contract address">
+            <input id="contractAddress" type="text" placeholder="Enter Pump AMM contract address">
             <button class="btn btn-primary" onclick="fetchDexscreener()">
               <i class="fas fa-download"></i> Fetch from Dexscreener
             </button>
             <span class="network-badge">
               <i class="fas fa-network-wired"></i> Solana
             </span>
+          </div>
+          <div style="margin-top: 8px; margin-left: 215px; font-size: 12px; color: #666; font-style: italic;">
+            <i class="fas fa-info-circle"></i> Only Pump AMM contracts supported.
           </div>
         </div>
         
@@ -279,7 +427,13 @@
           </div>
           
           <div class="input-row">
-            <label><i class="fas fa-wallet"></i> Your holdings (tokens):</label>
+            <label><i class="fas fa-coins"></i> Your total holdings (tokens):</label>
+            <input id="totalHoldings" type="number" value="50000000" oninput="updateHoldingsValue()">
+            <span id="totalHoldingsValue" class="holdings-value">($50.00)</span>
+          </div>
+          
+          <div class="input-row">
+            <label><i class="fas fa-wallet"></i> Amount to sell (tokens):</label>
             <input id="holdings" type="number" value="10000000" oninput="updateHoldingsValue()">
             <span id="holdingsValue" class="holdings-value">($10.00)</span>
           </div>
@@ -334,17 +488,45 @@
     </div>
   </div>
 
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">
+      <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/evodevpurple.png?raw=true" 
+           alt="EvoDev" class="footer-logo">
+      <span style="font-weight: bold; font-size: 16px;">Developed by EvoDev</span>
+      <a href="https://x.com/EvoDeveloper" target="_blank" style="color: white; margin-left: 15px; text-decoration: none; transition: transform 0.3s ease;" 
+         onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/xlogo.webp?raw=true" 
+             alt="X/Twitter" style="width: 16px; height: 16px; vertical-align: middle;">
+      </a>
+    </div>
+    <div class="footer-text">
+      <p>Professional crypto tools and development solutions</p>
+      <p>
+        <i class="fas fa-shield-alt"></i> Educational purposes only | 
+        <a href="https://x.com/EvoDeveloper" target="_blank" style="color: #56CCF2; text-decoration: none; font-weight: bold;">
+          <img src="https://github.com/charliekarlsson/price-impact-calculator/blob/main/xlogo.webp?raw=true" 
+               alt="X/Twitter" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;">
+          Follow @EvoDeveloper
+        </a>
+      </p>
+    </div>
+  </div>
+
   <script>
     // Uppdatera värdet på holdings i realtid
     function updateHoldingsValue() {
       const marketcap = parseFloat(document.getElementById("marketcap").value) || 0;
       const supply = parseFloat(document.getElementById("supply").value) || 1;
-      const holdings = parseFloat(document.getElementById("holdings").value) || 0;
+      const totalHoldings = parseFloat(document.getElementById("totalHoldings").value) || 0;
+      const amountToSell = parseFloat(document.getElementById("holdings").value) || 0;
       
       const pricePerToken = marketcap / supply;
-      const holdingsValue = holdings * pricePerToken;
+      const totalHoldingsValue = totalHoldings * pricePerToken;
+      const sellValue = amountToSell * pricePerToken;
       
-      document.getElementById("holdingsValue").textContent = `($${holdingsValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
+      document.getElementById("totalHoldingsValue").textContent = `($${totalHoldingsValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
+      document.getElementById("holdingsValue").textContent = `($${sellValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
     }
     
     // Uppdatera värdet när marketcap eller supply ändras också
@@ -470,7 +652,7 @@
       const notification = document.createElement('div');
       const bgColor = type === 'success' ? 
         'linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%)' : 
-        'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)';
+        'linear-gradient(135deg, #fdcb6e 0%, #e17055 100%)';
         
       notification.innerHTML = `
         <div style="position: fixed; top: 20px; right: 20px; background: ${bgColor}; 
@@ -522,6 +704,7 @@
     async function simulate() {
       const marketcap = parseFloat(document.getElementById("marketcap").value);
       const supply = parseFloat(document.getElementById("supply").value);
+      const totalHoldings = parseFloat(document.getElementById("totalHoldings").value);
       const holdings = parseFloat(document.getElementById("holdings").value);
       let reserveToken = parseFloat(document.getElementById("reserveToken").value);
       let reserveQuote = parseFloat(document.getElementById("reserveQuote").value);
@@ -632,16 +815,34 @@
       const impactPercent = ((correctPrice - newPrice) / correctPrice * 100).toFixed(2);
       const impactColor = impactPercent > 50 ? '#c0392b' : impactPercent > 25 ? '#f39c12' : '#27ae60';
       
+      // Calculate remaining holdings value after price impact
+      const remainingHoldings = totalHoldings - holdings;
+      const remainingValue = remainingHoldings * newPrice;
+      const remainingValueBefore = remainingHoldings * correctPrice; // Value of remaining holdings at original price
+      const totalValueBefore = totalHoldings * correctPrice;
+      const totalValueAfter = remainingValue + (holdings * newPrice); // This is just remaining value since we sold the rest
+      const amountLostToImpact = remainingValueBefore - remainingValue; // Value lost ONLY on remaining holdings due to price impact
+      
       document.getElementById('simResult').innerHTML =
         `<div style="display: grid; gap: 15px; margin-bottom: 20px;">
           <div style="background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%); padding: 20px; border-radius: 12px; border-left: 5px solid #27ae60;">
-            <h4 style="margin: 0 0 10px 0; color: #2c3e50;"><i class="fas fa-info-circle"></i> Current Analysis</h4>
+            <h4 style="margin: 0 0 10px 0; color: #2c3e50;"><i class="fas fa-info-circle"></i> Holdings Analysis</h4>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <div><b>Holdings:</b> ${holdings.toLocaleString()} tokens (${percentHoldings.toFixed(3)}% of supply)</div>
-              <div><b>Current Market Cap:</b> $${inputMarketcap.toLocaleString()}</div>
-              <div><b>Current Price:</b> $${correctPrice.toFixed(8)}</div>
-              <div><b>After Sell Market Cap:</b> $${newMarketcap.toLocaleString()}</div>
-              <div><b>After Sell Price:</b> $${newPrice.toFixed(8)}</div>
+              <div><b>Total Holdings:</b> ${totalHoldings.toLocaleString()} tokens (${((totalHoldings / supply) * 100).toFixed(3)}% of supply)</div>
+              <div><b>Amount to Sell:</b> ${holdings.toLocaleString()} tokens (${percentHoldings.toFixed(3)}% of supply)</div>
+              <div><b>Remaining Holdings:</b> ${remainingHoldings.toLocaleString()} tokens</div>
+              <div><b>Total Value Before:</b> $${totalValueBefore.toLocaleString()}</div>
+              <div><b>Remaining Value After:</b> $${remainingValue.toLocaleString()}</div>
+              <div style="color: #c0392b; font-weight: bold;"><b>Amount Lost to Impact:</b> $${amountLostToImpact.toLocaleString()}</div>
+            </div>
+          </div>
+          <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); padding: 20px; border-radius: 12px; border-left: 5px solid #f39c12;">
+            <h4 style="margin: 0 0 10px 0; color: #2c3e50;"><i class="fas fa-chart-line"></i> Price Analysis</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div><b>Market Cap (Current):</b> $${inputMarketcap.toLocaleString()}</div>
+              <div><b>Market Cap (After Sell):</b> $${newMarketcap.toLocaleString()}</div>
+              <div><b>Price (Current):</b> $${correctPrice.toFixed(8)}</div>
+              <div><b>Price (After Sell):</b> $${newPrice.toFixed(8)}</div>
               <div style="color: ${impactColor}; font-weight: bold;"><b>Price Impact:</b> ${impactPercent}%</div>
             </div>
           </div>
