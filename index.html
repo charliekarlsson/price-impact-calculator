@@ -430,14 +430,14 @@
             <label><i class="fas fa-coins"></i> Your total holdings (tokens):</label>
             <input id="totalHoldings" type="number" value="50000000" oninput="updateHoldingsValue()">
             <span id="totalHoldingsValue" class="holdings-value">($50.00)</span>
-           <span id="totalHoldingsPercent" style="color: #666; font-size: 12px; margin-left: 10px;">(5.0% of supply)</span>
+            <span id="totalHoldingsPercent" style="color: #666; font-size: 12px; margin-left: 10px;"></span>
           </div>
           
           <div class="input-row">
             <label><i class="fas fa-wallet"></i> Amount to sell (tokens):</label>
             <input id="holdings" type="number" value="10000000" oninput="updateHoldingsValue()">
             <span id="holdingsValue" class="holdings-value">($10.00)</span>
-           <span id="holdingsPercent" style="color: #666; font-size: 12px; margin-left: 10px;">(20.0% of holdings/1.0% of supply)</span>
+            <span id="holdingsPercent" style="color: #666; font-size: 12px; margin-left: 10px;"></span>
           </div>
         </div>
       </div>
@@ -527,17 +527,30 @@
       const totalHoldingsValue = totalHoldings * pricePerToken;
       const sellValue = amountToSell * pricePerToken;
       
+      // Calculate percentages
+      const totalHoldingsPercent = ((totalHoldings / supply) * 100).toFixed(1);
+      const sellPercentOfOwnHoldings = totalHoldings > 0 ? ((amountToSell / totalHoldings) * 100).toFixed(1) : 0;
+      const sellPercentOfSupply = ((amountToSell / supply) * 100).toFixed(1);
+      
       document.getElementById("totalHoldingsValue").textContent = `($${totalHoldingsValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
       document.getElementById("holdingsValue").textContent = `($${sellValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
+      
+      // Update percentage displays
+      document.getElementById("totalHoldingsPercent").textContent = `(${totalHoldingsPercent}% of supply)`;
+      document.getElementById("holdingsPercent").textContent = `(${sellPercentOfOwnHoldings}% of holdings, ${sellPercentOfSupply}% of supply)`;
     }
     
     // Uppdatera värdet när marketcap eller supply ändras också
     document.addEventListener('DOMContentLoaded', function() {
       const marketcapInput = document.getElementById("marketcap");
       const supplyInput = document.getElementById("supply");
+      const totalHoldingsInput = document.getElementById("totalHoldings");
+      const holdingsInput = document.getElementById("holdings");
       
       marketcapInput.addEventListener('input', updateHoldingsValue);
       supplyInput.addEventListener('input', updateHoldingsValue);
+      totalHoldingsInput.addEventListener('input', updateHoldingsValue);
+      holdingsInput.addEventListener('input', updateHoldingsValue);
       
       // Uppdatera vid laddning
       updateHoldingsValue();
@@ -978,4 +991,3 @@
   </script>
 </body>
 </html>
-
